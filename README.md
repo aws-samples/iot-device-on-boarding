@@ -26,21 +26,21 @@ Three steps to deploy the code:
 ```
 Device on-boarding has three steps:
 
-a) JITP device & cert
+a) JITP device & certificate
 ```bash
     > python mqtt_client.py --jitp
 ```
-b) Create manufacturer cert
+b) Create manufacturer certificate
 ```bash
     > python mqtt_client.py --create_cert
 ```
-c) Acknowledge manufacturer cert
+c) Acknowledge manufacturer certificate
 ```bash
     > python mqtt_client.py --ack_cert
 ```
 
 Two steps to cleanup everything in the AWS account:
-1) Remove devices and certs in IoT Core
+1) Remove devices and certificates in IoT Core
 ```bash
     > cd ../aws_cloud/certs_etc
     > python certs_etc —delete
