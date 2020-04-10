@@ -25,6 +25,7 @@ Three steps to deploy the code:
     > cd ~/linux_device
 ```
 Device on-boarding has three steps:
+
 a) JITP device & cert
 ```bash
     > python mqtt_client.py --jitp
