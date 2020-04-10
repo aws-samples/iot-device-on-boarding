@@ -1,5 +1,5 @@
-This directory contains the files that are part of the "Secure and Consistent IoT Device On-boarding with Just-In-Time-Provisioning (JITP) and Certificate Rotation"
-blog. This directory has all the files necessary to create the cloud components, initialize the cloud with a device, and simulate the device on-boarding to the cloud. 
+This repository contains the files that are part of the "Secure and Consistent IoT Device On-boarding with Just-In-Time-Provisioning (JITP) and Certificate Rotation"
+blog. This repository has all the files necessary to create the cloud components, initialize the cloud with a device, and simulate the device on-boarding to the cloud. 
 
 AWS Services and functionality utilized by this code include Cloudformation, IoT Core, IoT Rule, Iot Registered CAs, Lambda, DynamoDB, SSM parameter store. Boto3 and AWS CLI interface with the cloud. OpenSSL command line and python module create certficate authority certs, certifiactes, and certificate signing requests. The CA private keys are securely stored in the ssm parameter store.
 
