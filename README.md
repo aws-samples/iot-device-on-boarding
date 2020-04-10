@@ -5,7 +5,9 @@ IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates
 OpenSSL command line and OpenSSL python module perform X.509 certificate related actions, which include creating self-signed certificate authority (CA) certificates, certificate signing requests (CSR), certificates, and private keys. CA private keys are stored in SSM parameter store.
 
 First, determine the best S3 bucket name for your deployment following these rules:
+```
 https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules
+```
 Edit the below file and modify the variable named S3_BUCKET.
 ```bash
    ~/aws_cloud/cloud_formation/config.bash
