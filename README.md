@@ -1,6 +1,6 @@
 This repository contains the files for the "Secure and Consistent IoT Device On-boarding with Just-In-Time-Provisioning (JITP) and Certificate Rotation" blog. Included are all the files necessary to create the cloud components, initialize the cloud with a device, and simulate the device on-boarding to the cloud. 
 
-IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates, IoT Certificate Policies, JITP, IoT Things, Lambda, DynamoDB, Cloud Formation, AWS System Manager (SSM) parameter store, and AWS Python SDK are AWS components. Boto3 and AWS CLI interface with the cloud. The linux device uses AWS Python SDK and AWS CLI.
+IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates, IoT Certificate Policies, JITP, IoT Things, Lambda, DynamoDB, Cloud Formation, and AWS System Manager (SSM) parameter store are AWS components. Boto3 and AWS CLI interface with the cloud. 
 
 OpenSSL command line and OpenSSL python module perform X.509 certificate related actions, which include creating self-signed certificate authority (CA) certificates, certificate signing requests (CSR), certificates, and private keys. CA private keys are stored in SSM parameter store.
 
