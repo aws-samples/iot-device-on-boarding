@@ -1,0 +1,88 @@
+# MIT No Attribution
+# 
+# Copyright Amazon Web Services
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this
+# software and associated documentation files (the "Software"), to deal in the Software
+# without restriction, including without limitation the rights to use, copy, modify,
+# merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+# INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+# PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Note:
+    The notes below and the supporting scripts in this directory 
+    reflect the current plan.
+
+These notes demostrate the following:
+    1. Creating a self-signed Root CA for then registering it with AWS
+    2. Creating a device cert based on a self-signed Root CA and register cert in AWS IoT
+    3. Using the openssl.cnf file
+
+NOTE:
+    Make sure both lines are uncommented in the openssl.cnf file being used.
+        x509_extensions	= v3_ca	# The extensions to add to the self signed cert
+        req_extensions = v3_req # The extensions to add to a certificate request
+    The first ensures the self-signed CA is a version 3 certificate.
+    The second ensures the certificate signing requests (CSRs) request a version 3 certificate.
+        
+    To find the openssl.cnf file in use enter:
+    > openssl version -a
+    The OPENSSLDIR directory is where the openssl.cnf resides
+
+---------------------------------
+1. Creating a self-signed Root CA for an agency then registering it with AWS
+
+    1.a Steps for CA called "a1":
+        openssl genrsa -out a1_rootCA.key 2048
+        openssl req -x509 -new -nodes -key a1_rootCA.key -sha256 -days 9125 -out a1_rootCA.pem \
+            -subj "/C=US/ST=Kansas/L=Kansas City/O=MCICoffeMaker/OU=Manufacturing/CN=a1"
+        aws iot get-registration-code --output text > reg_code
+        openssl genrsa -out verificationCert.key 2048
+        openssl req -new -key verificationCert.key -out verificationCert.csr 
+            -subj "/C=US/ST=Kansas/L=Kansas City/O=MCICoffeMaker/OU=Manufacturing/CN='<cat reg_code'"
+        openssl x509 -req -in verificationCert.csr -CA a1_rootCA.pem -CAkey a1_rootCA.key -CAcreateserial \
+            -out verificationCert.pem -days 9125 -sha256
+        aws iot register-ca-certificate --ca-certificate file://a1_rootCA.pem --verification-cert file://verificationCert.pem --output text | awk \'{{print $2}}\' > a1_cert_id.txt
+        aws iot update-ca-certificate --certificate-id '<cat a1_cert_id.txt'  --new-status ACTIVE --output json
+        aws iot update-ca-certificate --certificate-id '<cat a1_cert_id.txt' --new-auto-registration-status ENABLE
+
+    1.b Look at the results:
+      openssl req -in verificationCert.csr  -noout -text > verification_csr.txt # print the CSR
+      cat verification_csr.txt
+      openssl x509 -in a1_rootCA.pem  -noout -text > a1_rootCA_pem.txt # print the certificate
+      cat a1_rootCA_pem.txt
+
+---------------------------------
+2. Creating a device cert based on a self-signed Root CA of a1 and register cert in AWS IoT
+    2.a Steps for device called "d1" within agency "a1".
+        openssl genrsa -out a1_d1.key 2048'.format(agency, dev)
+        openssl req -new -key a1_d1.key -out a1_d1.csr \
+            -subj "/C=US/ST=Kansas/L=Kansas City/O=MCICoffeMaker/OU=Manufacturing/CN=a1_d1"
+        openssl x509 -req -in a1_d1.csr -CA a1_rootCA.pem -CAkey a1_rootCA.key -CAcreateserial -out a1_d1.pem -days 9125 -sha256
+        aws iot register-certificate --certificate-pem file://a1_d1.pem --ca-certificate-pem file://a1_rootCA.pem --set-as-active --output text | awk \'{{print $2}}\' > a1_d1_cert_id.txt
+
+    2.a Look at the results:
+      openssl req -in a1_d1.csr  -noout -text > a1_d1_csr.txt # print the CSR
+      cat a1_d1_csr.txt
+      openssl x509 -in a1_d1.pem  -noout -text > a1_d1_pem.txt # print the certificate
+      cat a1_d1_pem.txt
+
+---------------------------------
+3. Using the openssl.cnf file
+    The openssl.cnf allow default values to be used for all openssl commands. 
+
+    Common usage:
+        - set subject values for City, State, Org, etc.
+        - set V3 for self-signed CA 
+           x509_extensions = v3_ca
+        - set V3 for CSRs 
+           req_extensions = v3_req
+
+    To verify which openssl.cnf file is being used enter:
+        - openssl version -a | grep OPENSSLDIR

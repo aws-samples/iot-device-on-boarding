@@ -1,0 +1,8 @@
+[
+    {"ca_name" : "Manufacturer",
+     "subj_str" : "/C=US/ST=Kansas/L=Kansas City/O=MCICoffeMaker/OU=Manufacturing/CN={}",
+     "devices" : "False",
+     "jitp" : "False",
+     "days" : "3650",
+     "policy_name" : "CrCompleteCertPolicy"}
+]

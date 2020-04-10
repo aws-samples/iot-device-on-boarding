@@ -1,0 +1,410 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Certificate Rotation CloudFormation Template",
+    "Parameters": {
+        "CertRotationLambdaName": {
+            "Description": "Cert Rotation Lambda name",
+            "Type": "String"
+        },
+        "CertRotationLambdaZipName": {
+            "Description": "Zip file name for Cert Rotation lambda",
+            "Type": "String"
+        },
+        "S3BucketName": {
+            "Description": "S3 Bucket for zip files",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "JitpRule": {
+            "Type": "AWS::IoT::TopicRule",
+            "Properties": {
+                "RuleName": "rule_jitp",
+                "TopicRulePayload": {
+
+                    "Sql": "SELECT * as data, topic() as topic, clientId() as client_id, principal() as cert_id FROM '$aws/events/certificates/registered/#'",
+                    "AwsIotSqlVersion": "2016-03-23",
+                    "RuleDisabled": false,
+                    "Actions": [
+                        {
+                            "Lambda": {
+                                "FunctionArn": {
+                                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CertRotationLambdaName}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "DependsOn": [
+                "CertRotationLambda"
+            ]
+        },
+        "CreateManCertRule": {
+            "Type": "AWS::IoT::TopicRule",
+            "Properties": {
+                "RuleName": "rule_create_man_cert",
+                "TopicRulePayload": {
+
+                    "Sql": "SELECT * as data, topic() as topic, clientId() as client_id, principal() as cert_id  FROM '/cert-rotation/create-man-cert/+/rqst'",
+                    "AwsIotSqlVersion": "2016-03-23",
+                    "RuleDisabled": false,
+                    "Actions": [
+                        {
+                            "Lambda": {
+                                "FunctionArn": {
+                                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CertRotationLambdaName}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "DependsOn": [
+                "CertRotationLambda"
+            ]
+        },
+        "AckManCertRule": {
+            "Type": "AWS::IoT::TopicRule",
+            "Properties": {
+                "RuleName": "rule_ack_man_cert",
+                "TopicRulePayload": {
+
+                    "Sql": "SELECT * as data, topic() as topic, clientId() as client_id, principal() as cert_id  FROM '/cert-rotation/ack-man-cert/+/rqst'",
+                    "AwsIotSqlVersion": "2016-03-23",
+                    "RuleDisabled": false,
+                    "Actions": [
+                        {
+                            "Lambda": {
+                                "FunctionArn": {
+                                    "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${CertRotationLambdaName}"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "DependsOn": [
+                "CertRotationLambda"
+            ]
+        },
+        "CertRotationLambda": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Code": {
+                    "S3Bucket": {
+                        "Fn::Sub": "${S3BucketName}"
+                    },
+                    "S3Key": {
+                        "Fn::Sub": "${CertRotationLambdaZipName}"
+                    }
+                },
+                "FunctionName": {
+                    "Ref": "CertRotationLambdaName"
+                },
+                "MemorySize": 128,
+                "Handler": {
+                    "Fn::Sub": "${CertRotationLambdaName}.cert_rotation_lambda"
+                },
+                "Role": {
+                    "Fn::Sub": "arn:aws:iam::${AWS::AccountId}:role/${LambdaRole}"
+                },
+                "Timeout": 5,
+                "Runtime": "python3.6",
+                "Description": "Cert Rotation lambda"
+            }
+        },
+        "JitpPermission": {
+            "Type": "AWS::Lambda::Permission", "Properties": {
+                "FunctionName": {
+                    "Fn::GetAtt": [
+                        "CertRotationLambda",
+                        "Arn"
+                    ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "iot.amazonaws.com",
+                "SourceAccount": {
+                    "Ref": "AWS::AccountId"
+                },
+                "SourceArn": {
+                    "Fn::GetAtt": [
+                        "JitpRule",
+                        "Arn"
+                    ]
+                }
+            }
+        },
+        "CreateManCertPermission": {
+            "Type": "AWS::Lambda::Permission", "Properties": {
+                "FunctionName": {
+                    "Fn::GetAtt": [
+                        "CertRotationLambda",
+                        "Arn"
+                    ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "iot.amazonaws.com",
+                "SourceAccount": {
+                    "Ref": "AWS::AccountId"
+                },
+                "SourceArn": {
+                    "Fn::GetAtt": [
+                        "CreateManCertRule",
+                        "Arn"
+                    ]
+                }
+            }
+        },
+        "AckManCertPermission": {
+            "Type": "AWS::Lambda::Permission", "Properties": {
+                "FunctionName": {
+                    "Fn::GetAtt": [
+                        "CertRotationLambda",
+                        "Arn"
+                    ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "iot.amazonaws.com",
+                "SourceAccount": {
+                    "Ref": "AWS::AccountId"
+                },
+                "SourceArn": {
+                    "Fn::GetAtt": [
+                        "AckManCertRule",
+                        "Arn"
+                    ]
+                }
+            }
+        },
+        "LambdaRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName": "CrLambdaRole",
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "CrLambdaPolicy",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "iot:AttachPolicy",
+                                        "iot:UpdateCertificate",
+                                        "iot:DescribeCertificate",
+                                        "iot:Publish",
+                                        "iot:CreateThing",
+                                        "iot:*",
+                                        "lambda:InvokeFunction",
+                                        "lambda:AddPermission",
+                                        "lambda:RemovePermission",
+                                        "logs:CreateLogGroup",
+                                        "logs:PutLogEvents",
+                                        "logs:CreateLogStream",
+                                        "s3:*",
+                                        "ssm:*",
+                                        "dynamodb:PutItem",
+                                        "dynamodb:GetItem"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "JitpRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName": "CrJitpRole",
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "iot.amazonaws.com"
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyName": "CrJitpPolicy",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "iot:AddThingToThingGroup",
+                                        "iot:AttachPrincipalPolicy",
+                                        "iot:AttachThingPrincipal",
+                                        "iot:CreateCertificateFromCsr",
+                                        "iot:CreatePolicy",
+                                        "iot:CreateThing",
+                                        "iot:DescribeCertificate",
+                                        "iot:DescribeThing",
+                                        "iot:DescribeThingGroup",
+                                        "iot:DescribeThingType",
+                                        "iot:DetachThingPrincipal",
+                                        "iot:GetPolicy",
+                                        "iot:ListPolicyPrincipals",
+                                        "iot:ListPrincipalPolicies",
+                                        "iot:ListPrincipalThings",
+                                        "iot:ListThingGroupsForThing",
+                                        "iot:ListThingPrincipals",
+                                        "iot:RegisterCertificate",
+                                        "iot:RegisterThing",
+                                        "iot:RemoveThingFromThingGroup",
+                                        "iot:UpdateCertificate",
+                                        "iot:UpdateThing",
+                                        "iot:UpdateThingGroupsForThing",
+                                        "iot:AddThingToBillingGroup",
+                                        "iot:DescribeBillingGroup",
+                                        "iot:RemoveThingFromBillingGroup",
+                                        "logs:CreateLogGroup",
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents",
+                                        "logs:PutMetricFilter",
+                                        "logs:PutRetentionPolicy",
+                                        "logs:GetLogEvents",
+                                        "logs:DeleteLogStream",
+                                        "dynamodb:PutItem",
+                                        "kinesis:PutRecord",
+                                        "iot:Publish",
+                                        "s3:PutObject",
+                                        "sns:Publish",
+                                        "sqs:SendMessage*",
+                                        "cloudwatch:SetAlarmState",
+                                        "cloudwatch:PutMetricData",
+                                        "es:ESHttpPut",
+                                        "firehose:PutRecord"
+                                    ],
+                                    "Resource": "*"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "DynamoDBTable": {
+            "Type" : "AWS::DynamoDB::Table",
+            "Properties" : {
+                "TableName": "CertRotationDevices",
+                "AttributeDefinitions" : [ 
+                    {
+                        "AttributeName": "SerialNumber",
+                        "AttributeType": "S"
+                    }
+                ],
+                "KeySchema" : [ 
+                    {
+                        "AttributeName": "SerialNumber",
+                        "KeyType": "HASH"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits": 5,
+                    "WriteCapacityUnits": 5
+                }
+            }
+        },
+        "CrInprogressCertPolicy": {
+            "Type" : "AWS::IoT::Policy",
+            "Properties" : {
+                "PolicyName" : "CrInprogressCertPolicy",
+                "PolicyDocument" : {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Connect",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:client/*"
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Publish",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:*"
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Subscribe",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:*"
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Receive",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:*"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "CrCertRotationCompleteCertPolicy": {
+            "Type" : "AWS::IoT::Policy",
+            "Properties" : {
+                "PolicyName" : "CrCertRotationCompleteCertPolicy",
+                "PolicyDocument" : {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Connect",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:client/*"
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Publish",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:*"
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Subscribe",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:*"
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": "iot:Receive",
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:*"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
