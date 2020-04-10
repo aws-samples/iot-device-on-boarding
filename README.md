@@ -5,19 +5,19 @@ AWS Services and functionality utilized by this code include Cloudformation, IoT
 
 Before starting edit one file to make a globally unique S3 bucket name.  Change S3_BUCKET in:
 
-'''python
+```python
    ~/aws_cloud/cloud_formation/config.bash
-'''
+```
 
 
 Three steps to deploy the code:
 
 1) Start cloud formation
 
-'''python
+```python
     > cd ~/aws_cloud/cloud_formation
     > bash deploy.bash
-'''
+```
 
 
 2) Initialize the system
