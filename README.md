@@ -9,7 +9,6 @@ Before starting edit one file to make a globally unique S3 bucket name.  Change 
 ```
 
 Three steps to deploy the code:
-
 1) Start cloud formation
 ```bash
     > cd ~/aws_cloud/cloud_formation
@@ -25,12 +24,10 @@ Three steps to deploy the code:
     > cd ~/linux_device
 ```
 Device on-boarding has three steps:
-
 a) JITP device & cert
 ```bash
     > python mqtt_client.py --jitp
 ```
-
 b) Create manufacturer cert
 ```bash
     > python mqtt_client.py --create_cert
@@ -40,15 +37,12 @@ c) Acknowledge manufacturer cert
     > python mqtt_client.py --ack_cert
 ```
 
-
 Two steps to cleanup everything in the AWS account:
-
 1) Remove devices and certs in IoT Core
 ```bash
     > cd ../aws_cloud/certs_etc
     > python certs_etc —delete
 ```
-
 2) Tear down cloud formation
 ```bash
     > cd ../cloud_formation
