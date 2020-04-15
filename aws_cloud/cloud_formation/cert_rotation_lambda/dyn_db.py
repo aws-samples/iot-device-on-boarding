@@ -68,7 +68,7 @@ def write_state(serial_number, state):
                 item.update({'CrState':state})
                 ddb_table.put_item(Item=item)
             else:
-                print('write_state(): get_item failed for serial_number = {}'.\
+                logging.error('write_state(): get_item failed for serial_number = {}'.\
                     format(serial_number))
 
         except Exception as e:
@@ -102,7 +102,7 @@ def write_man_cert_id(serial_number, cert_id):
             item.update({'ManufacturerCertId':cert_id})
             ddb_table.put_item(Item=item)
         else:
-            print('write_man_cert_id(): get_item failed for serial_number = {}'.\
+            logging.error('write_man_cert_id(): get_item failed for serial_number = {}'.\
                     format(serial_number))
 
     except Exception as e:
@@ -115,7 +115,7 @@ def read_man_ca_cert_id(serial_number):
         response = ddb_table.get_item(Key={'SerialNumber':serial_number})
         item = response.get('Item', None)
 
-        print('read_man_ca_cert_id: item = {}'.format(item))
+        logging.info('read_man_ca_cert_id: item = {}'.format(item))
         ca_cert_id = item.get('ManufacturerCaCertId', '')
     except Exception as e:
         logging.error('read_man_cert_id(): Exception = {}'.format(str(e)))
@@ -128,7 +128,7 @@ def read_man_cert_id(serial_number):
         response = ddb_table.get_item(Key={'SerialNumber':serial_number})
         item = response.get('Item', None)
 
-        print('read_man_cert_id: item = {}'.format(item))
+        logging.info('read_man_cert_id: item = {}'.format(item))
         cert_id = item.get('ManufacturerCertId', '')
     except Exception as e:
         logging.error('read_man_cert_id(): Exception = {}'.format(str(e)))
@@ -142,14 +142,14 @@ def write_vendor_cert_id(serial_number, cert_id):
         if item:
             if cert_id:
                 item.update({'VendorCertId':cert_id})
-                print('write_vendor_cert_id(): update')
+                logging.info('write_vendor_cert_id(): update')
             else:
                 # If no cert_id then remove VendorCertId this field from the entry
-                print('write_vendor_cert_id(): pop')
+                logging.error('write_vendor_cert_id(): pop')
                 item.pop('VendorCertId')
             ddb_table.put_item(Item=item)
         else:
-            print('write_vendor_cert_id(): get_item failed for serial_number = {}'.\
+            logging.error('write_vendor_cert_id(): get_item failed for serial_number = {}'.\
                     format(serial_number))
 
     except Exception as e:
@@ -162,7 +162,7 @@ def read_vendor_cert_id(serial_number):
         response = ddb_table.get_item(Key={'SerialNumber':serial_number})
         item = response.get('Item', None)
 
-        print('read_vendor_cert_id: item = {}'.format(item))
+        logging.info('read_vendor_cert_id: item = {}'.format(item))
         cert_id = item.get('VendorCertId', '')
     except Exception as e:
         logging.error('read_vendor_cert_id(): Exception = {}'.format(str(e)))
