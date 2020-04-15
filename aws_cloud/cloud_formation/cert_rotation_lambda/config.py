@@ -26,7 +26,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from botocore.config import Config
 
 import logging
-logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s', level=logging.INFO)
+#logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s')
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logging = logger
 
 ##############################################################
 # Cert Rotation states stored in State field of DynamoDB table
