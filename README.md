@@ -98,16 +98,19 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 
 <p>Three steps to deploy the code:</p>
 <p>1) Start cloud formation</p>
+
 ```bash
     > cd ~/aws_cloud/cloud_formation
     > bash deploy_cf.bash
 ```
 <p>2) Initialize the system</p>
+
 ```bash
     > cd ~/aws_cloud/cloud_formation
     > python certs_etc.py --create
 ```
 <p>3) On board the linux device</p>
+
 ```bash
     > cd ~/linux_device
 ```
