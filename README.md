@@ -139,7 +139,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 ```
     > cd ~/aws_cloud/certs_etc
     > python certs_etc -—delete
-    > python certs_etc -—crate
+    > python certs_etc -—create
 ```
 
 <h1>Clean-up</h1> 
