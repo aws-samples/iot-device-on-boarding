@@ -32,6 +32,11 @@ http://macappstore.org/openssl/
 ~/aws_cloud/certs_etc/OpenSSLCommands.txt
 ```
 
+<p>If you are using a Mac, then install docker from here:</p>
+
+```
+https://hub.docker.com/editions/community/docker-ce-desktop-mac
+```
 <p>Clone this repository on your MacOS or Linux machine:</p>
 
 ```
