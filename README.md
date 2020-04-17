@@ -96,7 +96,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 
 <h1>Deploy Cloud</h1> 
 
-<p>Three steps to deploy the code:</p>
+<p>Two steps to deploy the code:</p>
 <p>1) Start cloud formation</p>
 
 ```
@@ -109,17 +109,14 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
     > cd ~/aws_cloud/cloud_formation
     > python certs_etc.py --create
 ```
-<p>3) On board the linux device</p>
 
-```
-    > cd ~/linux_device
-```
 <h1>On-Board a Device</h1> 
 <p>Device on-boarding has three steps:</p>
 
 <p>a) JITP device & certificate</p>
 
 ```
+    > cd ~/linux_device
     > python mqtt_client.py --jitp
 ```
 <p>b) Create manufacturer certificate</p>
