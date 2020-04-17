@@ -138,8 +138,8 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 
 ```
     > cd ~/aws_cloud/certs_etc
-    > python certs_etc -—delete
-    > python certs_etc -—create
+    > python certs_etc.py -—delete
+    > python certs_etc.py -—create
 ```
 
 <h1>Clean-up</h1> 
@@ -148,7 +148,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 
 ```
     > cd ~/aws_cloud/certs_etc
-    > python certs_etc -—delete
+    > python certs_etc.py -—delete
 ```
 <p>2) Tear down cloud formation</p>
 
