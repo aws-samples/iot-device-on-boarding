@@ -58,11 +58,14 @@ https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketna
 ~/aws_cloud/cloud_formation/config.bash
 ```
 
-<p>Create a new virtual python3 environment then source that environment. </p>
+<p>Create a new virtual python3 environment in the root directory of this repo then source 
+that environment. </p>
+```
 ```
 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-environment.html
 ```
 <p>Install python modules. </p>
+
 
 ```
 > cd ~/aws_cloud/certs_etc
@@ -83,7 +86,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 ```
 > cd ~/aws_cloud/cloud_formation/cert_rotation_lambda
 > pwd
-> docker run -v _<full path name to cert_rotation_lambda dir__>_:/lambda -it --rm ubuntu
+> docker run -v <full path name to cert_rotation_lambda dir>:/lambda -it --rm ubuntu
 > apt-get update && apt-get install -y -qq python3-pip git && cd /usr/local/bin && ln -s /usr/bin/python3 python && python3 -m pip install --upgrade pip && python3 -m pip install ipython && rm -rf /var/lib/apt/lists/* 
 > apt-get update && apt-get install zip 
 > cd /lambda
@@ -91,7 +94,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 > exit
 ```
 
-
+<h1>Deploy Cloud</h1> 
 
 Three steps to deploy the code:
 1) Start cloud formation
@@ -108,6 +111,7 @@ Three steps to deploy the code:
 ```bash
     > cd ~/linux_device
 ```
+<h1>On-Board a Device</h1> 
 Device on-boarding has three steps:
 
 a) JITP device & certificate
@@ -123,6 +127,7 @@ c) Acknowledge manufacturer certificate
     > python mqtt_client.py --ack_cert
 ```
 
+<h1>Clean-up</h1> 
 Two steps to cleanup everything in the AWS account:
 1) Remove devices and certificates in IoT Core
 ```bash
