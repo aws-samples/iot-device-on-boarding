@@ -20,23 +20,26 @@ private keys are stored in SSM parameter store.</p>
 ```bash
 https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 ```
-
 <p>Install OpenSSL command line on the machine acting like the linux device.</p>
+
 ```bash
 https://www.howtoforge.com/tutorial/how-to-install-openssl-from-source-on-linux/
 http://macappstore.org/openssl/
 ```
 <p>For additional tips see this file from the blog code:</p>
+
 ```bash
 ~/aws_cloud/certs_etc/OpenSSLCommands.txt
 ```
 
 <p>Clone this repository on your MacOS or Linux machine:</p>
+
 ```bash
 https://github.com/aws-samples/iot-device-on-boarding
 ```
 
 <p>The directory structure of the code is:</p>
+
 ```bash
 ~/aws_cloud/cloud_formation/cert_rotation_lambda
 ~/aws_cloud/cloud_formation
