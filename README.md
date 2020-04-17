@@ -60,7 +60,7 @@ https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketna
 
 <p>Create a new virtual python3 environment in the root directory of this repo then source 
 that environment. </p>
-```
+
 ```
 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-environment.html
 ```
@@ -96,45 +96,47 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 
 <h1>Deploy Cloud</h1> 
 
-Three steps to deploy the code:
-1) Start cloud formation
+<p>Three steps to deploy the code:</p>
+<p>1) Start cloud formation</p>
 ```bash
     > cd ~/aws_cloud/cloud_formation
     > bash deploy_cf.bash
 ```
-2) Initialize the system
+<p>2) Initialize the system</p>
 ```bash
     > cd ~/aws_cloud/cloud_formation
     > python certs_etc.py --create
 ```
-3) On board the linux device
+<p>3) On board the linux device</p>
 ```bash
     > cd ~/linux_device
 ```
 <h1>On-Board a Device</h1> 
-Device on-boarding has three steps:
+<p>Device on-boarding has three steps:</p>
 
-a) JITP device & certificate
+<p>a) JITP device & certificate</p>
 ```bash
     > python mqtt_client.py --jitp
 ```
-b) Create manufacturer certificate
+<p>b) Create manufacturer certificate</p>
 ```bash
     > python mqtt_client.py --create_cert
 ```
-c) Acknowledge manufacturer certificate
+<p>c) Acknowledge manufacturer certificate</p>
 ```bash
     > python mqtt_client.py --ack_cert
 ```
 
 <h1>Clean-up</h1> 
-Two steps to cleanup everything in the AWS account:
-1) Remove devices and certificates in IoT Core
+<p>Two steps to cleanup everything in the AWS account:</p>
+<p>1) Remove devices and certificates in IoT Core</p>
+
 ```bash
     > cd ../aws_cloud/certs_etc
     > python certs_etc —delete
 ```
-2) Tear down cloud formation
+<p>2) Tear down cloud formation</p>
+
 ```bash
     > cd ../cloud_formation
     > bash delete_cf.bash
