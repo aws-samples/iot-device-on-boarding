@@ -99,19 +99,19 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 <p>Three steps to deploy the code:</p>
 <p>1) Start cloud formation</p>
 
-```bash
+```
     > cd ~/aws_cloud/cloud_formation
     > bash deploy_cf.bash
 ```
 <p>2) Initialize the system</p>
 
-```bash
+```
     > cd ~/aws_cloud/cloud_formation
     > python certs_etc.py --create
 ```
 <p>3) On board the linux device</p>
 
-```bash
+```
     > cd ~/linux_device
 ```
 <h1>On-Board a Device</h1> 
@@ -119,17 +119,17 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 
 <p>a) JITP device & certificate</p>
 
-```bash
+```
     > python mqtt_client.py --jitp
 ```
 <p>b) Create manufacturer certificate</p>
 
-```bash
+```
     > python mqtt_client.py --create_cert
 ```
 <p>c) Acknowledge manufacturer certificate</p>
 
-```bash
+```
     > python mqtt_client.py --ack_cert
 ```
 
@@ -137,13 +137,13 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 <p>Two steps to cleanup everything in the AWS account:</p>
 <p>1) Remove devices and certificates in IoT Core</p>
 
-```bash
+```
     > cd ~/aws_cloud/certs_etc
-    > python certs_etc —delete
+    > python certs_etc -—delete
 ```
 <p>2) Tear down cloud formation</p>
 
-```bash
+```
     > cd ~/aws_cloud/cloud_formation
     > bash delete_cf.bash
 ```
