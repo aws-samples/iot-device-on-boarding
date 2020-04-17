@@ -1,18 +1,18 @@
 <h1>Introduction</h1>
-This repository contains the files for the "Secure and Consistent IoT Device On-
+<p>This repository contains the files for the "Secure and Consistent IoT Device On-
 boarding with Just-In-Time-Provisioning (JITP) and Certificate Rotation" blog. 
 I ncluded are all the files necessary to create the cloud components, initialize 
-the cloud with a device, and simulate the device on-boarding to the cloud. 
+the cloud with a device, and simulate the device on-boarding to the cloud.</p>
 
-IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates
+<p>IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates
 , IoT Certificate Policies, JITP, IoT Things, Lambda, DynamoDB, Cloud Formation,
  and AWS System Manager (SSM) parameter store are AWS components. Boto3 and AWS 
-CLI interface with the cloud. 
+CLI interface with the cloud.</p>
 
-OpenSSL command line and OpenSSL python module perform X.509 certificate related
+<p>OpenSSL command line and OpenSSL python module perform X.509 certificate related
  actions, which include creating self-signed certificate authority (CA) certific
 ates, certificate signing requests (CSR), certificates, and private keys. CA 
-private keys are stored in SSM parameter store.
+private keys are stored in SSM parameter store.</p>
 
 First, determine the best S3 bucket name for your deployment following these 
 rules:
