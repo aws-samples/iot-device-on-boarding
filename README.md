@@ -1,7 +1,7 @@
 <h1>Introduction</h1>
 <p>This repository contains the files for the "Secure and Consistent IoT Device On-
 boarding with Just-In-Time-Provisioning (JITP) and Certificate Rotation" blog. 
-I ncluded are all the files necessary to create the cloud components, initialize 
+Included are all the files necessary to create the cloud components, initialize 
 the cloud with a device, and simulate the device on-boarding to the cloud.</p>
 
 <p>IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates
@@ -10,9 +10,9 @@ the cloud with a device, and simulate the device on-boarding to the cloud.</p>
 CLI interface with the cloud.</p>
 
 <p>OpenSSL command line and OpenSSL python module perform X.509 certificate related
- actions, which include creating self-signed certificate authority (CA) certific
-ates, certificate signing requests (CSR), certificates, and private keys. CA 
-private keys are stored in SSM parameter store.</p>
+ actions, which include creating self-signed certificate authority (CA) 
+certificates, certificate signing requests (CSR), certificates, and private keys. 
+CA private keys are stored in SSM parameter store.</p>
 
 <h1>Setup</h1>
 <p>Install the AWS CLI using these instructions:</p>
@@ -26,7 +26,7 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 https://www.howtoforge.com/tutorial/how-to-install-openssl-from-source-on-linux/
 http://macappstore.org/openssl/
 ```
-<p>For additional tips see this file from the blog code:</p>
+<p>For additional OpenSSL command line tips see this file from the blog code:</p>
 
 ```
 ~/aws_cloud/certs_etc/OpenSSLCommands.txt
@@ -49,7 +49,8 @@ https://github.com/aws-samples/iot-device-on-boarding
 <p>Determine the best S3 bucket name for your deployment following these rules:</p>
 
 ```
-<p>https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules</p>
+https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules
+```
 
 <p>Edit the below file and modify the variable named S3_BUCKET.</p>
 
