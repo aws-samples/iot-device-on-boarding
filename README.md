@@ -16,9 +16,10 @@ private keys are stored in SSM parameter store.</p>
 
 <h1>Setup</h1>
 <p>Install the AWS CLI using these instructions:</p>
-'''bash
+
+```bash
 https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
-'''
+```
 
 <p>Install OpenSSL command line on the machine acting like the linux device.</p>
 ```bash
