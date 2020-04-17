@@ -134,6 +134,12 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 ```
     > python mqtt_client.py --ack_cert
 ```
+<p>To run the on-boarding code a again, then do this:</p>
+```
+    > cd ~/aws_cloud/certs_etc
+    > python certs_etc -—delete
+    > python certs_etc -—crate
+```
 
 <h1>Clean-up</h1> 
 <p>Two steps to cleanup everything in the AWS account:</p>
