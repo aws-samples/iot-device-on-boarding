@@ -118,14 +118,17 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 <p>Device on-boarding has three steps:</p>
 
 <p>a) JITP device & certificate</p>
+
 ```bash
     > python mqtt_client.py --jitp
 ```
 <p>b) Create manufacturer certificate</p>
+
 ```bash
     > python mqtt_client.py --create_cert
 ```
 <p>c) Acknowledge manufacturer certificate</p>
+
 ```bash
     > python mqtt_client.py --ack_cert
 ```
