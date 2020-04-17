@@ -138,12 +138,12 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 <p>1) Remove devices and certificates in IoT Core</p>
 
 ```bash
-    > cd ../aws_cloud/certs_etc
+    > cd ~/aws_cloud/certs_etc
     > python certs_etc —delete
 ```
 <p>2) Tear down cloud formation</p>
 
 ```bash
-    > cd ../cloud_formation
+    > cd ~/aws_cloud/cloud_formation
     > bash delete_cf.bash
 ```
