@@ -20,6 +20,8 @@ A reference architecture is below:
 
 # Setup
 
+Python 3.6 or newer is required.
+
 Install the AWS CLI using these instructions:
 
 ```
@@ -129,16 +131,26 @@ Device on-boarding has three steps:
     > cd ~/linux_device
     > python mqtt_client.py --jitp
 ```
+
+![step1](images/CertRotationBlogCon1.png)
+
 2) Create manufacturer certificate
 
 ```
     > python mqtt_client.py --create_cert
 ```
+
+![step2](images/CertRotationBlogCon2.png)
+
 3) Acknowledge manufacturer certificate
 
 ```
     > python mqtt_client.py --ack_cert
 ```
+
+![step3](images/CertRotationBlogCon3.png)
+
+
 To run the on-boarding code a again, then do this:
 
 ```
