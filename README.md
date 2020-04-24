@@ -5,15 +5,23 @@ boarding with Just-In-Time-Provisioning (JITP) and Certificate Rotation" blog.
 Included are all the files necessary to create the cloud components, initialize 
 the cloud with a device, and simulate the device on-boarding to the cloud.
 
-IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates,
-IoT Certificate Policies, JITP, IoT Things, Lambda, DynamoDB, Cloud Formation,
-and AWS System Manager (SSM) parameter store are AWS components. Boto3 and AWS 
-CLI interface with the cloud.
+The IAM user executing this code needs privileges for AWS IoT Core, IoT Rules, 
+IoT Registered Certificate Authority (CA), IoT Certificates, IoT Certificate 
+Policies, JITP, IoT Things, AWS Lambda, AWS DynamoDB, AWS Cloudformation, and 
+AWS System Manager (SSM) parameter store, and AWS CLI access.
 
 OpenSSL command line and OpenSSL python module perform X.509 certificate related
 actions, which include creating self-signed certificate authority (CA) 
 certificates, certificate signing requests (CSR), certificates, and private keys. 
 CA private keys are stored in SSM parameter store.
+
+Issues with the OpenSSL configuration file may occur. Refer to this document for
+tips to resolve OpenSSL issues.
+
+```
+https://www.howtoforge.com/tutorial/how-to-install-openssl-from-source-on-linux/
+http://macappstore.org/openssl/
+```
 
 A reference architecture is below:
 ![arch](images/CrArch.png)
