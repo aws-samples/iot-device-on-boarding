@@ -15,7 +15,7 @@ certificates, certificate signing requests (CSR), certificates, and private keys
 CA private keys are stored in SSM parameter store.</p>
 
 <p>A reference architecture is below:</p>
-![arch](https://github.com/ahttps://github.com/aws-samples/iot-device-on-boarding/tree/images/images/CrArch.png)
+![arch](images/CrArch.png)
 
 <h1>Setup</h1>
 <p>Install the AWS CLI using these instructions:</p>
