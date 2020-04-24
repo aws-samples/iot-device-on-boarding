@@ -8,7 +8,7 @@ the cloud with a device, and simulate the device on-boarding to the cloud.
 IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates,
 IoT Certificate Policies, JITP, IoT Things, Lambda, DynamoDB, Cloud Formation,
 and AWS System Manager (SSM) parameter store are AWS components. Boto3 and AWS 
-CLI interface with the cloud.<
+CLI interface with the cloud.
 
 OpenSSL command line and OpenSSL python module perform X.509 certificate related
 actions, which include creating self-signed certificate authority (CA) 
@@ -37,18 +37,18 @@ For additional OpenSSL command line tips see this file from the blog code:
 ~/aws_cloud/certs_etc/OpenSSLCommands.txt
 ```
 
-<p>If you are using a Mac, then install docker from here:</p>
+If you are using a Mac, then install docker from here:
 
 ```
 https://hub.docker.com/editions/community/docker-ce-desktop-mac
 ```
-<p>Clone this repository on your MacOS or Linux machine:</p>
+Clone this repository on your MacOS or Linux machine:
 
 ```
 https://github.com/aws-samples/iot-device-on-boarding
 ```
 
-<p>The directory structure of the code is:</p>
+The directory structure of the code is:
 
 ```
 ~/aws_cloud/cloud_formation/cert_rotation_lambda
@@ -56,25 +56,25 @@ https://github.com/aws-samples/iot-device-on-boarding
 ~/aws_cloud/certs_etc
 ~/linux_devce
 ```
-<p>Determine the best S3 bucket name for your deployment following these rules:</p>
+Determine the best S3 bucket name for your deployment following these rules:
 
 ```
 https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules
 ```
 
-<p>Edit the below file and modify the variable named S3_BUCKET.</p>
+Edit the below file and modify the variable named S3_BUCKET.
 
 ```
 ~/aws_cloud/cloud_formation/config.bash
 ```
 
-<p>Create a new virtual python3 environment in the root directory of this repo then source 
-that environment. </p>
+Create a new virtual python3 environment in the root directory of this repo then source 
+that environment. 
 
 ```
 https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-environment.html
 ```
-<p>Install python modules. </p>
+Install python modules. 
 
 
 ```
@@ -84,14 +84,14 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 > sudo pip3 install -r requirements.txt
 ```
 
-<p>If installing on a linux machine, then run the following:</p>
+If installing on a linux machine, then run the following:
 
 ```
 > cd ~/aws_cloud/cloud_formation/cert_rotation_lambda
 > sudo pip3 install -r requirements.txt -t ./package
 ```
 
-<p>If installing on a Mac, then you have to spin-up a docker container to install the lambda python modules to run on ubuntu, which is the default AWS lambda instance. Install docker then, do the following:</p>
+If installing on a Mac, then you have to spin-up a docker container to install the lambda python modules to run on ubuntu, which is the default AWS lambda instance. Install docker then, do the following:
 
 ```
 > cd ~/aws_cloud/cloud_formation/cert_rotation_lambda
@@ -106,40 +106,40 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 
 ## Deploy Cloud
 
-<p>Two steps to deploy the code:</p>
-<p>1) Start cloud formation</p>
+Two steps to deploy the code:
+1) Start cloud formation
 
 ```
     > cd ~/aws_cloud/cloud_formation
     > bash deploy_cf.bash
 ```
-<p>2) Initialize the system</p>
+2) Initialize the system
 
 ```
     > cd ~/aws_cloud/cloud_formation
     > python certs_etc.py --create
 ```
 
-<h1>On-Board a Device</h1> 
-<p>Device on-boarding has three steps:</p>
+# On-Board a Device
+Device on-boarding has three steps:
 
-<p>1) JITP device & certificate</p>
+1) JITP device & certificate
 
 ```
     > cd ~/linux_device
     > python mqtt_client.py --jitp
 ```
-<p>2) Create manufacturer certificate</p>
+2) Create manufacturer certificate
 
 ```
     > python mqtt_client.py --create_cert
 ```
-<p>3) Acknowledge manufacturer certificate</p>
+3) Acknowledge manufacturer certificate
 
 ```
     > python mqtt_client.py --ack_cert
 ```
-<p>To run the on-boarding code a again, then do this:</p>
+To run the on-boarding code a again, then do this:
 
 ```
     > cd ~/aws_cloud/certs_etc
@@ -147,15 +147,15 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
     > python certs_etc.py -—create
 ```
 
-<h1>Clean-up</h1> 
-<p>Two steps to cleanup everything in the AWS account:</p>
-<p>1) Remove devices and certificates in IoT Core</p>
+# Clean-up
+Two steps to cleanup everything in the AWS account:
+1) Remove devices and certificates in IoT Core
 
 ```
     > cd ~/aws_cloud/certs_etc
     > python certs_etc.py -—delete
 ```
-<p>2) Tear down cloud formation</p>
+2) Tear down cloud formation
 
 ```
     > cd ~/aws_cloud/cloud_formation
