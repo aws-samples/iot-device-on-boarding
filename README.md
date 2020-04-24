@@ -15,14 +15,6 @@ actions, which include creating self-signed certificate authority (CA)
 certificates, certificate signing requests (CSR), certificates, and private keys. 
 CA private keys are stored in SSM parameter store.
 
-Issues with the OpenSSL configuration file may occur. Refer to this document for
-tips to resolve OpenSSL issues.
-
-```
-https://www.howtoforge.com/tutorial/how-to-install-openssl-from-source-on-linux/
-http://macappstore.org/openssl/
-```
-
 A reference architecture is below:
 ![arch](images/CrArch.png)
 
@@ -41,7 +33,8 @@ Install OpenSSL command line on the machine acting like the linux device.
 https://www.howtoforge.com/tutorial/how-to-install-openssl-from-source-on-linux/
 http://macappstore.org/openssl/
 ```
-For additional OpenSSL command line tips see this file from the blog code:
+Issues with OpenSSL configuration file may occur. For resolution tips, read this
+file in the blog code:
 
 ```
 ~/aws_cloud/certs_etc/OpenSSLCommands.txt
