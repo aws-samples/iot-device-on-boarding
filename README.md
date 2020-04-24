@@ -1,35 +1,37 @@
-<h1>Introduction</h1>
-<p>This repository contains the files for the "Secure and Consistent IoT Device On-
+# Introduction
+
+This repository contains the files for the "Secure and Consistent IoT Device On-
 boarding with Just-In-Time-Provisioning (JITP) and Certificate Rotation" blog. 
 Included are all the files necessary to create the cloud components, initialize 
-the cloud with a device, and simulate the device on-boarding to the cloud.</p>
+the cloud with a device, and simulate the device on-boarding to the cloud.
 
-<p>IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates
-, IoT Certificate Policies, JITP, IoT Things, Lambda, DynamoDB, Cloud Formation,
- and AWS System Manager (SSM) parameter store are AWS components. Boto3 and AWS 
-CLI interface with the cloud.</p>
+IoT Core, IoT Rules, IoT Registered Certificate Authority (CA), IoT Certificates,
+IoT Certificate Policies, JITP, IoT Things, Lambda, DynamoDB, Cloud Formation,
+and AWS System Manager (SSM) parameter store are AWS components. Boto3 and AWS 
+CLI interface with the cloud.<
 
-<p>OpenSSL command line and OpenSSL python module perform X.509 certificate related
- actions, which include creating self-signed certificate authority (CA) 
+OpenSSL command line and OpenSSL python module perform X.509 certificate related
+actions, which include creating self-signed certificate authority (CA) 
 certificates, certificate signing requests (CSR), certificates, and private keys. 
-CA private keys are stored in SSM parameter store.</p>
+CA private keys are stored in SSM parameter store.
 
-<p>A reference architecture is below:</p>
+A reference architecture is below:
 ![arch](images/CrArch.png)
 
-<h1>Setup</h1>
-<p>Install the AWS CLI using these instructions:</p>
+# Setup
+
+Install the AWS CLI using these instructions:
 
 ```
 https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 ```
-<p>Install OpenSSL command line on the machine acting like the linux device.</p>
+Install OpenSSL command line on the machine acting like the linux device.
 
 ```
 https://www.howtoforge.com/tutorial/how-to-install-openssl-from-source-on-linux/
 http://macappstore.org/openssl/
 ```
-<p>For additional OpenSSL command line tips see this file from the blog code:</p>
+For additional OpenSSL command line tips see this file from the blog code:
 
 ```
 ~/aws_cloud/certs_etc/OpenSSLCommands.txt
@@ -102,7 +104,7 @@ https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/python-development-enviro
 > exit
 ```
 
-<h1>Deploy Cloud</h1> 
+## Deploy Cloud
 
 <p>Two steps to deploy the code:</p>
 <p>1) Start cloud formation</p>
