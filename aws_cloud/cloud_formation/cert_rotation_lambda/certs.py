@@ -118,12 +118,12 @@ def get_secure_store(ca_cert_id):
         if parameter:
             value = parameter.get('Value', None)
             if not value:
-                print('get_secure_store{}: Parameter = {}'.format(parameter))
+               logging.error('get_secure_store(): Parameter = {}'.format(parameter))
         else:
-            print('get_secure_store{}: repsonse = {}'.format(response))
+            logging.error('get_secure_store(): repsonse = {}'.format(response))
 
     except Exception as e:
-        print('get_secure_store(): exception = {}'.format(str(e)))
+        logging.error('get_secure_store(): exception = {}'.format(str(e)))
 
     return value
 
